@@ -1,0 +1,24 @@
+(() => {
+  const evts = ['blur', 'focusout', 'visibilitychange', 'webkitvisibilitychange', 'pagehide', 'pageshow'];
+  const stop = e => e.stopImmediatePropagation();
+
+  // 1) Gỡ listener đã đăng ký sẵn (chỉ Console của Chrome/Edge có getEventListeners)
+  if (typeof getEventListeners === 'function') {
+    [window, document, document.body].forEach(t => {
+      const l = getEventListeners(t);
+      evts.forEach(ev => (l[ev] || []).forEach(x => t.removeEventListener(ev, x.listener, x.useCapture)));
+    });
+  }
+
+  // 2) Vô hiệu các handler dạng thuộc tính (window.onblur = ...)
+  window.onblur = window.onpagehide = window.onpageshow = null;
+  document.onvisibilitychange = null;
+
+  // 3) Chặn sự kiện ở pha capture, kể cả listener đăng ký sau này
+  evts.forEach(t => window.addEventListener(t, stop, true));
+
+  // 4) Giả lập trạng thái luôn "đang hiển thị và có focus"
+  Object.defineProperty(document, 'hidden', { get: () => false, configurable: true });
+  Object.defineProperty(document, 'visibilityState', { get: () => 'visible', configurable: true });
+  document.hasFocus = () => true;
+})();
