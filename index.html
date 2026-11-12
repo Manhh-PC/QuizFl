@@ -14,6 +14,13 @@
     .focusstatus.lost{background:#453026;border-color:#895b3a;color:#ffd49a}
     .focusstatus.lost .focusdot{background:#ffb14c;box-shadow:0 0 0 3px #ffb14c1f}
     .logicon.info{background:#204339;color:#8de2b9}
+    .iosnote{margin-top:14px;border:1px solid #3e5289;background:#1c2e4a;border-radius:12px;padding:13px 14px;color:#d2e2ff;font-size:12px;line-height:1.65}
+    .iosnote strong{color:#b7dcff}.iosnote .mini{color:#91b1e0;font-size:11px}
+    .debugbox{margin-top:12px;border:1px solid #2d3e59;background:#0c1729;border-radius:12px;padding:12px;font-size:11px;line-height:1.55;color:#b4c8e8;max-height:180px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+    .iosoptions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .iosoptions label{font-size:11px;color:#b7cbed;font-weight:750}
+    .iosoptions select{font:inherit;font-size:12px;color:#e7efff;background:#243855;border:1px solid #58739b;border-radius:8px;padding:7px 8px;max-width:100%}
+    [hidden]{display:none!important}
   </style>
 </head>
 <body>
@@ -26,11 +33,11 @@
       <div id="result" aria-live="polite"><div class="big">🏆</div><div class="sectionlabel">Hoàn thành bài kiểm tra</div><h2 id="score"></h2><p id="scoretext"></p><button class="primary" id="restart">Làm lại bài thi</button></div>
     </section>
     <aside class="side">
-      <section class="card panel"><div class="panelhead"><h2>🛡️ Theo dõi hành vi</h2><span class="stat" id="warningCount">0</span></div><div class="monstatus"><span class="dot"></span><span>Đang theo dõi sự kiện trình duyệt</span></div><div class="focusstatus" id="focusStatus" role="status" aria-live="polite"><span class="focusdot"></span><span id="focusLabel">Focus IN · Đang ở trong trang thi</span></div><div class="tips"><div><span class="ico">◎</span><span>Focus OUT khỏi trang thi/cửa sổ: tính 1 lượt cảnh báo, kể cả khi trang vẫn hiển thị</span></div><div><span class="ico">↩</span><span>Focus IN: ghi nhận khi quay lại, không tính thêm vi phạm. Chuyển giữa các đáp án trong cùng trang không tính.</span></div><div><span class="ico">⇄</span><span>Chuyển tab hoặc đưa ứng dụng trình duyệt xuống nền</span></div><div><span class="ico">▣</span><span>Thu nhỏ cửa sổ (qua việc trang bị ẩn) hoặc thay đổi đáng kể kích thước trên PC</span></div><div><span class="ico">⛶</span><span>Thoát chế độ toàn màn hình, nếu đã bật</span></div></div><div class="buttons"><button class="secondary" id="simulate">Thử popup</button><button class="secondary" id="fullscreen">Toàn màn hình</button><button class="secondary" id="clear">Xóa lịch sử</button></div></section>
+      <section class="card panel"><div class="panelhead"><h2>🛡️ Theo dõi hành vi</h2><span class="stat" id="warningCount">0</span></div><div class="monstatus"><span class="dot"></span><span>Đang theo dõi sự kiện trình duyệt</span></div><div class="focusstatus" id="focusStatus" role="status" aria-live="polite"><span class="focusdot"></span><span id="focusLabel">Focus IN · Đang ở trong trang thi</span></div><div class="tips"><div><span class="ico">◎</span><span>Focus OUT khỏi trang thi/cửa sổ: tính 1 lượt cảnh báo, kể cả khi trang vẫn hiển thị</span></div><div><span class="ico">↩</span><span>Focus IN: ghi nhận khi quay lại, không tính thêm vi phạm. Chuyển giữa các đáp án trong cùng trang không tính.</span></div><div><span class="ico">⇄</span><span>Chuyển tab hoặc đưa ứng dụng trình duyệt xuống nền</span></div><div><span class="ico">▣</span><span>Thu nhỏ cửa sổ (qua việc trang bị ẩn) hoặc thay đổi đáng kể kích thước trên PC</span></div><div><span class="ico">⛶</span><span>Thoát chế độ toàn màn hình, nếu đã bật</span></div></div><div class="iosnote" id="iosNotice" hidden><strong>🍎 Giám sát iOS nâng cao đã bật</strong><div>Thêm pagehide/pageshow và phát hiện khoảng dừng bất thường của nhịp cập nhật trang để nhận biết một số lần bật đa nhiệm hoặc Control Center. Kết quả là <b>dấu hiệu nghi ngờ</b>, không phải bằng chứng chắc chắn.</div><div class="mini">Popup chỉ hiện sau khi trở lại web. iOS không cung cấp API để biết trực tiếp Control Center có đang mở hay không.</div><div class="iosoptions"><label for="iosSensitivity">Độ nhạy (thử nghiệm):</label><select id="iosSensitivity"><option value="1100">Cao · 1,1 giây (dễ báo nhầm)</option><option value="1800" selected>Cân bằng · 1,8 giây</option><option value="2800">Thấp · 2,8 giây</option></select></div></div><div class="buttons"><button class="secondary" id="simulate">Thử popup</button><button class="secondary" id="fullscreen">Toàn màn hình</button><button class="secondary" id="clear">Xóa lịch sử</button><button class="secondary" id="diag" hidden>Tín hiệu iOS</button></div><div class="debugbox" id="diagnostics" hidden aria-live="polite"></div></section>
       <section class="card panel"><div class="panelhead"><h2>📋 Nhật ký sự kiện</h2><span class="muted" id="loglabel">Phiên hiện tại</span></div><div class="log" id="logs"><p class="empty">Chưa ghi nhận hành vi nào. Hãy thử nhấn Alt+Tab, click ra ứng dụng khác, đổi tab hoặc nhấn “Thử popup”.</p></div></section>
     </aside>
   </main>
-  <p class="footnote"><strong>Giới hạn kỹ thuật:</strong> Website chỉ phát hiện các sự kiện mà trình duyệt cung cấp. Trên iOS/Android, việc chuyển ứng dụng hoặc thu nhỏ thường chỉ được nhận biết qua trạng thái trang ẩn; không thể biết người dùng đã mở ứng dụng nào. Focus OUT được theo dõi qua sự kiện window blur và kiểm tra focusout khi focus rời vùng trang; focus giữa các thành phần trong cùng trang không bị tính. Trên iOS/Android, các sự kiện focus/blur có thể khác nhau theo trình duyệt và không bảo đảm phát hiện mọi thao tác. Các tín hiệu focus out và trang ẩn thuộc cùng một lần rời trang được gộp để tránh đếm trùng. Trình duyệt cũng không cung cấp cách chắc chắn để phân biệt chuyển tab với thu nhỏ cửa sổ. Demo chỉ ghi log trong bộ nhớ của trang, không gửi dữ liệu lên máy chủ.</p>
+  <p class="footnote"><strong>Giới hạn kỹ thuật:</strong> Website không đọc được thao tác cấp hệ điều hành (Control Center, Notification Center, giao diện đa nhiệm) trên iPhone. Các sự kiện focus, visibility, pagehide và dấu hiệu tạm dừng JavaScript đều có thể bị bỏ qua; khi đó <strong>không thể đảm bảo có cảnh báo</strong>. Khoảng dừng JavaScript có thể xảy ra vì tải máy/chế độ tiết kiệm pin nên chỉ được đánh dấu <em>nghi ngờ</em>. Popup không thể nổi lên trên giao diện của iOS; nó hiện khi quay lại trang. Các sự kiện gần nhau được gộp để tránh đếm trùng. Demo không gửi dữ liệu lên máy chủ; trên iOS nhật ký được giữ trong sessionStorage của tab để hỗ trợ phục hồi nếu trang tải lại.</p>
 </div>
 <div class="overlay" id="overlay" aria-hidden="true"><div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogtitle" aria-describedby="dialogdesc"><button class="close" id="close" aria-label="Đóng cảnh báo">×</button><div class="warnicon">⚠</div><div class="tag">Cảnh báo giám sát</div><h2 id="dialogtitle">Phát hiện hành vi</h2><p id="dialogdesc"></p><button class="primary" id="ok">OK, tôi đã hiểu</button></div></div>
 <script>
@@ -44,10 +51,20 @@
     {q:'API nào cho biết tài liệu đang hiển thị hay bị ẩn?',a:['navigator.clipboard','document.visibilityState','window.localStorage','screen.orientation'],right:1}
   ];
   const $ = id => document.getElementById(id);
-  const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints>1 && innerWidth<900);
-  $('device').textContent = /iPhone|iPad|iPod/i.test(navigator.userAgent)?'iOS / iPadOS':/Android/i.test(navigator.userAgent)?'Android':mobile?'Thiết bị cảm ứng':'PC / Desktop';
+  const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  const mobile = isIOS || /Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints>1 && innerWidth<900);
+  $('device').textContent = isIOS?'iOS / iPadOS':/Android/i.test(navigator.userAgent)?'Android':mobile?'Thiết bị cảm ứng':'PC / Desktop';
+  $('iosNotice').hidden=!isIOS; $('diag').hidden=!isIOS;
   let index=0, selected=null, correct=0, warnings=0, lastWarningAt=0, lastKind='', lastWidth=innerWidth, lastHeight=innerHeight, enteredFullscreen=false, dialogOpen=false, focusBeforeDialog=null;
   let logs=[]; const startWidth=innerWidth;
+  // Chỉ lưu dữ liệu trong tab, không tải lên máy chủ. iOS có thể huỷ tab khi ở nền.
+  const storageKey='quiz-answers-ios-session-v3';
+  const storage={get(){try{return JSON.parse(sessionStorage.getItem(storageKey)||'null')}catch{return null}},set(data){try{sessionStorage.setItem(storageKey,JSON.stringify(data))}catch{}},remove(){try{sessionStorage.removeItem(storageKey)}catch{}}};
+  let restoredPopup=false;
+  if(isIOS){const saved=storage.get();if(saved && Date.now()-saved.savedAt<3600000){warnings=Number(saved.warnings)||0;logs=Array.isArray(saved.logs)?saved.logs.slice(0,25):[];restoredPopup=!!saved.pending}}
+  let diagnostics=[];
+  const diagnostic=(event, extra='')=>{if(!isIOS)return;diagnostics.unshift(`${new Date().toLocaleTimeString('vi-VN')} · ${event} · visible=${document.visibilityState} · focus=${document.hasFocus()}${extra?' · '+extra:''}`);diagnostics=diagnostics.slice(0,20);$('diagnostics').textContent=diagnostics.join('\n')};
+  $('diag').addEventListener('click',()=>{$('diagnostics').hidden=!$('diagnostics').hidden;$('diag').textContent=$('diagnostics').hidden?'Tín hiệu iOS':'Ẩn tín hiệu iOS'});
   const clock = () => new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   function renderQuestion(){let q=questions[index];selected=null;$('counter').textContent=String(index+1).padStart(2,'0')+' / '+String(questions.length).padStart(2,'0');$('bar').style.width=((index+1)/questions.length*100)+'%';$('question').textContent=q.q;$('answers').replaceChildren();q.a.forEach((answer,i)=>{const b=document.createElement('button');b.type='button';b.className='answer';const span=document.createElement('span');span.className='letter';span.textContent='ABCD'[i];const text=document.createElement('span');text.textContent=answer;b.append(span,text);b.addEventListener('click',()=>{selected=i;document.querySelectorAll('.answer').forEach(n=>n.classList.remove('selected'));b.classList.add('selected');$('next').disabled=false});$('answers').append(b)});$('next').textContent=index===questions.length-1?'Nộp bài ✓':'Câu tiếp theo →';$('next').disabled=true}
   $('next').addEventListener('click',()=>{if(selected===null)return;if(selected===questions[index].right)correct++;if(++index===questions.length){$('quizcontent').style.display='none';$('result').style.display='block';$('score').textContent=correct+' / '+questions.length+' câu đúng';$('scoretext').textContent=correct===questions.length?'Xuất sắc! Bạn đã trả lời đúng tất cả câu hỏi.':'Bạn đã hoàn thành bài thi thử. Bạn có thể làm lại để cải thiện điểm số.'}else renderQuestion()});
@@ -58,10 +75,11 @@
     $('logs').replaceChildren();
     logs.forEach(e=>{const wrap=document.createElement('div');wrap.className='logentry';const icon=document.createElement('span');icon.className='logicon'+(e.info?' info':'');icon.textContent=e.info?'↩':'⚠';const body=document.createElement('div');const title=document.createElement('strong');title.textContent=e.title;const time=document.createElement('time');time.textContent=e.time;body.append(title,time);wrap.append(icon,body);$('logs').append(wrap)});
   }
-  function addLog(title,info=false){logs.unshift({title,time:clock(),info});logs=logs.slice(0,25);renderLogs()}
+  function saveSession(pending=(pendingPopup || restoredPopup) && dialogOpen){if(isIOS)storage.set({savedAt:Date.now(),warnings,logs,pending})}
+  function addLog(title,info=false){const entry={title,time:clock(),info};logs.unshift(entry);logs=logs.slice(0,25);renderLogs();saveSession();return entry}
   function setFocusState(hasFocus){$('focusStatus').classList.toggle('lost',!hasFocus);$('focusLabel').textContent=hasFocus?'Focus IN · Đang ở trong trang thi':'Focus OUT · Đã rời khỏi trang thi'}
   function dismiss(){
-    dialogOpen=false;pendingPopup=false;$('overlay').classList.remove('show');$('overlay').setAttribute('aria-hidden','true');
+    dialogOpen=false;pendingPopup=false;restoredPopup=false;$('overlay').classList.remove('show');$('overlay').setAttribute('aria-hidden','true');saveSession(false);
     if(document.hasFocus() && focusBeforeDialog?.isConnected)focusBeforeDialog.focus?.();
   }
   $('ok').addEventListener('click',dismiss);$('close').addEventListener('click',dismiss);
@@ -79,59 +97,127 @@
     showDialog(title,description);
   }
 
-  // Mỗi lần rời vùng focus của trang/cửa sổ là MỘT episode. 'blur', 'focusout'
-  // và 'visibilitychange: hidden' có thể cùng phát sinh cho một thao tác, do đó
-  // không đếm trùng. Chỉ khi focus QUAY LẠI mới cho phép tính một episode mới.
+  // Một lần rời trang = một episode. blur/visibility/pagehide thường cùng phát ra;
+  // không đếm trùng. Gián đoạn JS trên iOS chỉ là HEURISTIC, không phải chắc chắn.
   let episodeActive=false;
   let episodeSignals=new Set();
+  let episodeLog=null;
+  let lastEpisodeEndAt=0;
+  let lastEpisodeStartAt=0;
   let pendingPopup=false;
+  const dedupWindowMs=1200;
+  let IOS_GAP_MS=1800; // Có thể chỉnh độ nhạy nếu iOS không phát ra sự kiện thông thường.
+  $('iosSensitivity').addEventListener('change',e=>{IOS_GAP_MS=Number(e.target.value);diagnostic('đổi độ nhạy','ngưỡng='+IOS_GAP_MS+'ms')});
   function episodeTitle(){
-    const lostFocus=episodeSignals.has('focusout');
-    const hidden=episodeSignals.has('hidden');
-    if(lostFocus && hidden)return 'Focus OUT + trang bị ẩn (cùng 1 lần rời trang)';
-    if(lostFocus)return 'Focus OUT: cửa sổ/trang thi mất focus';
-    return 'Trang bị ẩn: chuyển tab / thu nhỏ / chuyển ứng dụng';
+    if(episodeSignals.has('hidden') && episodeSignals.has('focusout'))return 'Focus OUT + trang bị ẩn (1 lượt)';
+    if(episodeSignals.has('hidden'))return 'Trang bị ẩn: chuyển tab / chuyển ứng dụng';
+    if(episodeSignals.has('pagehide'))return 'Trang đã rời phiên hiển thị (pagehide)';
+    if(episodeSignals.has('focusout'))return 'Focus OUT: trang thi mất focus';
+    if(episodeSignals.has('interruption'))return 'iOS: nghi ngờ trang bị gián đoạn';
+    return 'Rời trang thi';
   }
   function episodeDescription(){
-    if(episodeSignals.has('focusout')&&episodeSignals.has('hidden'))return 'Trang thi vừa mất focus và bị ẩn. Hệ thống ghi nhận 1 lần rời trang (không đếm trùng khi vừa chuyển tab vừa mất focus).';
-    if(episodeSignals.has('focusout'))return 'Focus đã rời khỏi trang thi hoặc cửa sổ trình duyệt, dù trang có thể vẫn đang hiển thị. Vui lòng quay lại và tiếp tục làm bài.';
-    return 'Trang thi đã bị ẩn. Có thể bạn chuyển tab, thu nhỏ trình duyệt, khóa màn hình hoặc chuyển ứng dụng khác.';
+    if(episodeSignals.has('interruption') && episodeSignals.size===1)return 'Trình duyệt iOS vừa gián đoạn nhịp cập nhật trang trong một khoảng thời gian bất thường. Có thể liên quan tới đa nhiệm, Control Center, khóa màn hình hoặc việc hệ thống làm chậm/tạm dừng JavaScript. Đây chỉ là dấu hiệu nghi ngờ, không thể khẳng định hành vi cụ thể.';
+    if(episodeSignals.has('hidden') && episodeSignals.has('focusout'))return 'Trang thi đã mất focus và bị ẩn. Hệ thống gộp thành 1 lượt để tránh đếm trùng.';
+    if(episodeSignals.has('focusout'))return 'Cửa sổ/trang thi đã mất focus. Vui lòng quay lại trang thi.';
+    if(episodeSignals.has('hidden'))return 'Trang thi bị ẩn. Nguyên nhân có thể là chuyển tab, thu nhỏ, khóa màn hình hoặc chuyển ứng dụng.';
+    return 'Trình duyệt vừa phát sinh sự kiện pagehide. Đây có thể là chuyển trang hoặc thay đổi vòng đời của tab.';
+  }
+  function displayEpisode(){
+    showDialog('Phát hiện rời khỏi trang thi',episodeDescription(),false);
+    pendingPopup=true;
+    saveSession(true);
   }
   function detectExit(signal){
+    const now=Date.now();
+    diagnostic('exit:'+signal);
     if(!episodeActive){
-      episodeActive=true;episodeSignals=new Set([signal]);warnings++;
-      addLog(episodeTitle());
+      // Safari đôi lúc báo blur/hidden trễ sau khi đã focus; gộp sự kiện sát nhau.
+      if(now-lastEpisodeEndAt<dedupWindowMs){
+        if(dialogOpen){pendingPopup=true;saveSession(true)}
+        diagnostic('gộp tín hiệu trễ:'+signal);
+        return;
+      }
+      episodeActive=true;lastEpisodeStartAt=now;episodeSignals=new Set([signal]);warnings++;
+      episodeLog=addLog(episodeTitle());
     }else{
-      const before=episodeTitle();episodeSignals.add(signal);
-      if(before!==episodeTitle() && logs.length && !logs[0].info){logs[0].title=episodeTitle();renderLogs()}
+      episodeSignals.add(signal);
+      if(episodeLog){episodeLog.title=episodeTitle();renderLogs()}
     }
-    setFocusState(false);
-    pendingPopup=document.visibilityState!=='visible' || !document.hasFocus();
-    showDialog('Phát hiện rời khỏi trang thi',episodeDescription(),false);
+    if(signal!=='interruption')setFocusState(false);
+    displayEpisode();
   }
-  function detectReturn(){
-    // Khi vẫn ở tab ẩn hoặc cửa sổ chưa có focus, chưa coi là đã quay lại.
-    if(document.visibilityState!=='visible'||!document.hasFocus())return;
-    if(!episodeActive){setFocusState(true);return}
-    episodeActive=false;episodeSignals.clear();
-    setFocusState(true);addLog('Focus IN: đã quay lại trang thi',true);
-    if(dialogOpen && pendingPopup){pendingPopup=false;$('ok').focus()}
+  function detectReturn(source='focus',allowIOSRecovery=false){
+    if(document.visibilityState!=='visible')return;
+    // Trên Safari iOS document.hasFocus() không phải lúc nào cũng cập nhật khi quay lại.
+    if(!document.hasFocus() && !(isIOS && allowIOSRecovery))return;
+    diagnostic('return:'+source);
+    if(!episodeActive){setFocusState(true);if(dialogOpen && pendingPopup)$('ok').focus();return}
+    episodeActive=false;lastEpisodeEndAt=Date.now();episodeSignals.clear();episodeLog=null;
+    setFocusState(true);addLog('Đã quay lại trang thi ('+source+')',true);
+    if(dialogOpen && pendingPopup)$('ok').focus();
   }
-  // window blur/focus là tín hiệu chính để nhận biết việc focus rời khỏi trang.
-  // Bao gồm Alt+Tab, click sang ứng dụng khác, thanh địa chỉ, v.v.
+  // Sự kiện tương đối tin cậy trên desktop/Android và một số trạng thái Safari iOS.
   window.addEventListener('blur',()=>detectExit('focusout'));
-  window.addEventListener('focus',()=>{detectReturn();setTimeout(detectReturn,0)});
-  // focusout trên body BUBBLES cả khi đổi focus giữa hai đáp án.
-  // Chỉ tính khi focus thực sự rời khỏi cửa sổ; tránh cảnh báo sai vì tương tác nội bộ.
+  window.addEventListener('focus',()=>{detectReturn('focus',true);setTimeout(()=>detectReturn('focus',true),0)});
   document.body.addEventListener('focusout',e=>{
     if(e.relatedTarget && document.body.contains(e.relatedTarget))return;
     setTimeout(()=>{if(!document.hasFocus())detectExit('focusout')},0);
   });
-  document.body.addEventListener('focusin',()=>{if(document.hasFocus())detectReturn()});
-  document.addEventListener('visibilitychange',()=>{
+  document.body.addEventListener('focusin',()=>{if(document.hasFocus())detectReturn('focusin',true)});
+  function onVisibility(){
+    diagnostic('visibilitychange');
     if(document.visibilityState==='hidden')detectExit('hidden');
-    else{if(dialogOpen)pendingPopup=true;detectReturn()}
+    else{
+      if(dialogOpen)pendingPopup=true;
+      detectReturn('visibilitychange',true);
+      // Safari có thể phục hồi hiển thị trước khi phản hồi focus.
+      if(isIOS)setTimeout(()=>detectReturn('visibilitychange',true),120);
+    }
+  }
+  document.addEventListener('visibilitychange',onVisibility);
+  // Một số bản iOS/Safari sử dụng sự kiện tiền tố, hoặc chỉ pagehide/pageshow.
+  if(isIOS)document.addEventListener('webkitvisibilitychange',()=>{
+    if(document.visibilityState==='hidden' && !episodeActive)onVisibility();
+    else diagnostic('webkitvisibilitychange');
   });
+  window.addEventListener('pagehide',e=>{diagnostic('pagehide','persisted='+e.persisted);detectExit('pagehide');saveSession(true)});
+  window.addEventListener('pageshow',e=>{
+    diagnostic('pageshow','persisted='+e.persisted);
+    if(e.persisted){detectReturn('pageshow',true);if(dialogOpen)pendingPopup=true}
+  });
+  // Một số phiên bản iOS không phát ra sự kiện mất focus/ẩn trang khi vuốt
+  // Control Center hoặc đa nhiệm. Khi JS bị ngừng, nhịp rAF/timer nhảy vọt.
+  // Chỉ ghi là 'nghi ngờ'; không thể phát hiện trường hợp OS che trang mà JS vẫn chạy.
+  if(isIOS){
+    let lastAnimationAt=0,lastHeartbeatAt=Date.now(),lastGapWarningAt=0;
+    const checkGap=(gap,source)=>{
+      if(gap<IOS_GAP_MS || document.visibilityState!=='visible')return;
+      diagnostic('gián đoạn nhịp '+source,'gap='+Math.round(gap)+'ms');
+      if(episodeActive || Date.now()-lastEpisodeEndAt<dedupWindowMs || Date.now()-lastGapWarningAt<3500)return;
+      lastGapWarningAt=Date.now();
+      detectExit('interruption');
+      // Đây là dấu hiệu phát hiện SAU KHI trang chạy lại, không phải đang mất focus.
+      detectReturn('phục hồi nhịp iOS',true);
+    };
+    const animationLoop=()=>{
+      const now=Date.now();
+      if(lastAnimationAt)checkGap(now-lastAnimationAt,'rAF');
+      lastAnimationAt=now;
+      // Lấy mẫu ~3 lần/giây để giảm hao pin thay vì chạy JavaScript 60fps.
+      setTimeout(()=>requestAnimationFrame(animationLoop),350);
+    };
+    requestAnimationFrame(animationLoop);
+    setInterval(()=>{
+      const now=Date.now();
+      checkGap(now-lastHeartbeatAt,'timer');
+      lastHeartbeatAt=now;
+    },500);
+    // Nếu Safari không báo focus khi quay lại nhưng người dùng chạm vào trang,
+    // chúng ta có thể kết thúc episode cũ. Không coi thao tác chạm là vi phạm.
+    document.addEventListener('pointerdown',()=>detectReturn('chạm trang',true),{passive:true});
+    document.addEventListener('touchstart',()=>detectReturn('chạm trang',true),{passive:true});
+  }
   // Trên mobile việc bật bàn phím ảo/xoay máy thay đổi viewport: không suy ra thu nhỏ.
   let resizeTimer;
   window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{
@@ -149,10 +235,11 @@
     catch(err){warn('unsupported','Không thể bật toàn màn hình','Trình duyệt hoặc thiết bị đã từ chối yêu cầu toàn màn hình.',true)}
   });
   $('simulate').addEventListener('click',()=>warn('demo','Đây là popup thử nghiệm','Hệ thống đã mô phỏng một hành vi bất thường. Khi có sự kiện thực tế, cảnh báo cũng xuất hiện giữa màn hình và có thể đóng bằng OK hoặc dấu ×.',true));
-  $('clear').addEventListener('click',()=>{logs=[];warnings=0;renderLogs()});
+  $('clear').addEventListener('click',()=>{logs=[];warnings=0;episodeActive=false;episodeSignals.clear();episodeLog=null;lastEpisodeEndAt=0;storage.remove();renderLogs();saveSession(false)});
   // Khi tải lại giữa một lần mất focus, không tự động tạo lượt cảnh báo.
-  setFocusState(document.hasFocus());
+  setFocusState(document.hasFocus() || isIOS);
   renderQuestion();renderLogs();
+  if(isIOS){diagnostic('bắt đầu giám sát iOS','ngưỡng gián đoạn='+IOS_GAP_MS+'ms');if(restoredPopup){showDialog('Cảnh báo từ phiên iOS trước','Trước khi Safari tải lại trang, hệ thống đã ghi nhận một lần rời trang hoặc gián đoạn. Nhật ký của tab được giữ lại để bạn xem.',true);pendingPopup=true}}
 })();
 </script>
 </body>
